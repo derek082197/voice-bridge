@@ -84,8 +84,11 @@ wss.on("connection", (telnyxWs) => {
         const msg = JSON.parse(data);
         switch (msg.type) {
           case "response.audio.delta":
-            if (streamSid && telnyxWs.readyState === WebSocket.OPEN) {
-              telnyxWs.send(JSON.stringify({
+  if (!streamSid) { console.log("⚠️ Audio delta but NO streamSid yet!"); }
+  if (streamSid && telnyxWs.readyState === WebSocket.OPEN) {
+    telnyxWs.send(JSON.stringify({
+            
+            
                 event: "media",
                 streamSid,
                 media: { payload: msg.delta },
